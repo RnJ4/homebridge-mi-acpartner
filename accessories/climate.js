@@ -66,13 +66,17 @@ class ClimateAccessory extends baseAC {
             })
             .on('set', this.setTargetTemperature.bind(this));
 
-        this.CurrentTemperature = this.climateService
-            .getCharacteristic(Characteristic.CurrentTemperature)
-            .setProps({
-                maxValue: 60,
-                minValue: -20,
-                minStep: 1
-            });
+        if (this.outerSensor) {
+            this.CurrentTemperature = this.climateService
+                .getCharacteristic(Characteristic.CurrentTemperature)
+                .setProps({
+                    maxValue: 60,
+                    minValue: -20,
+                    minStep: 1
+                });
+        }else{
+            this.CurrentTemperature = 25
+        }
 
         if (this.outerSensor) {
             this.CurrentRelativeHumidity = this.climateService
